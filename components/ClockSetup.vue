@@ -1,10 +1,36 @@
 <script setup lang="ts">
-const initialSeconds = ref(600)
-const incrementSeconds = ref(0)
+const initialMinutes = useState('initialMinutes', () => 10)
+const incrementSeconds = useState('incrementSeconds', () => 0)
+
+const timeOptions = [0, 1, 2, 3, 5, 8, 10, 15, 20, 30, 45, 60, 90, 120]
+
+const sliderMinutes = useState('sliderMinutes', () => timeOptions.indexOf(initialMinutes.value))
+const sliderSeconds = useState('sliderSeconds', () => timeOptions.indexOf(incrementSeconds.value))
+
+watch(sliderMinutes, (newValue) => {
+    initialMinutes.value = timeOptions[newValue]
+})
+
+watch(sliderSeconds, (newValue) => {
+    incrementSeconds.value = timeOptions[newValue]
+})
 </script>
 
 <template>
     <div class="text-center text-[14vw]">
-        {{ initialSeconds / 60 }}+{{ incrementSeconds }}
+        {{ initialMinutes }}+{{ incrementSeconds }}
     </div>
+
+    <div class="mx-4">
+        <div>
+            <input class="w-full" type="range" v-model="sliderMinutes" min="0" :max="timeOptions.length - 1" list="timeOptions" />
+        </div>
+        <div class="mt-10">
+            <input class="w-full" type="range" v-model="sliderSeconds" min="0" :max="timeOptions.length - 1" list="timeOptions" />
+        </div>
+    </div>
+
+    <datalist id="timeOptions">
+        <option v-for="step in timeOptions.length" :value="step"></option>
+    </datalist>
 </template>

@@ -7,6 +7,7 @@ http://localhost:3000
 
 ```bash
 npx nuxi typecheck
+npx vitest
 ```
 
 ```bash
