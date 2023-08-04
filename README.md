@@ -6,6 +6,10 @@ npm run dev
 http://localhost:3000
 
 ```bash
+npx nuxi typecheck
+```
+
+```bash
 npm run build
 ```
 
