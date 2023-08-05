@@ -4,8 +4,12 @@ const incrementSeconds = useState('incrementSeconds', () => 0)
 
 const timeOptions = [0, 1, 2, 3, 5, 8, 10, 15, 20, 30, 45, 60, 90, 120]
 
-const sliderMinutes = useState('sliderMinutes', () => timeOptions.indexOf(initialMinutes.value))
-const sliderSeconds = useState('sliderSeconds', () => timeOptions.indexOf(incrementSeconds.value))
+const sliderMinutes = useState('sliderMinutes', () =>
+    timeOptions.indexOf(initialMinutes.value)
+)
+const sliderSeconds = useState('sliderSeconds', () =>
+    timeOptions.indexOf(incrementSeconds.value)
+)
 
 watch(sliderMinutes, (newValue) => {
     initialMinutes.value = timeOptions[newValue]
@@ -23,10 +27,24 @@ watch(sliderSeconds, (newValue) => {
 
     <div class="mx-4">
         <div>
-            <input class="w-full" type="range" v-model="sliderMinutes" min="0" :max="timeOptions.length - 1" list="timeOptions" />
+            <input
+                class="w-full"
+                type="range"
+                v-model="sliderMinutes"
+                min="0"
+                :max="timeOptions.length - 1"
+                list="timeOptions"
+            />
         </div>
         <div class="mt-10">
-            <input class="w-full" type="range" v-model="sliderSeconds" min="0" :max="timeOptions.length - 1" list="timeOptions" />
+            <input
+                class="w-full"
+                type="range"
+                v-model="sliderSeconds"
+                min="0"
+                :max="timeOptions.length - 1"
+                list="timeOptions"
+            />
         </div>
     </div>
 
