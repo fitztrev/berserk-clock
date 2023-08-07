@@ -11,7 +11,7 @@ const bindings: Record<string, ButtonAction> = {
 window.addEventListener('keydown', (e) => {
     const binding = bindings[e.code]
     if (binding) {
-        console.log('binding', binding)
+        console.log('binding:', binding)
     }
 })
 </script>
@@ -19,5 +19,9 @@ window.addEventListener('keydown', (e) => {
 <template>
     <div>
         <ClockSetup />
+
+        <Clock ref="clockLeft" />
+        <br>
+        <Clock ref="clockRight" />
     </div>
 </template>

@@ -4,18 +4,19 @@ const incrementSeconds = useState('incrementSeconds', () => 0)
 
 const timeOptions = [0, 1, 2, 3, 5, 8, 10, 15, 20, 30, 45, 60, 90, 120]
 
-const sliderMinutes = useState('sliderMinutes', () =>
+const sliderMinuteIndex = useState('sliderMinuteIndex', () =>
     timeOptions.indexOf(initialMinutes.value)
 )
-const sliderSeconds = useState('sliderSeconds', () =>
+
+const sliderSecondsIndex = useState('sliderSecondsIndex', () =>
     timeOptions.indexOf(incrementSeconds.value)
 )
 
-watch(sliderMinutes, (newValue) => {
+watch(sliderMinuteIndex, (newValue) => {
     initialMinutes.value = timeOptions[newValue]
 })
 
-watch(sliderSeconds, (newValue) => {
+watch(sliderSecondsIndex, (newValue) => {
     incrementSeconds.value = timeOptions[newValue]
 })
 </script>
@@ -30,7 +31,7 @@ watch(sliderSeconds, (newValue) => {
             <input
                 class="w-full"
                 type="range"
-                v-model="sliderMinutes"
+                v-model.number="sliderMinuteIndex"
                 min="0"
                 :max="timeOptions.length - 1"
                 list="timeOptions"
@@ -40,7 +41,7 @@ watch(sliderSeconds, (newValue) => {
             <input
                 class="w-full"
                 type="range"
-                v-model="sliderSeconds"
+                v-model.number="sliderSecondsIndex"
                 min="0"
                 :max="timeOptions.length - 1"
                 list="timeOptions"
