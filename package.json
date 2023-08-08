@@ -19,6 +19,7 @@
     "vue-tsc": "^1.8.8"
   },
   "dependencies": {
+    "blinking.css": "^1.1.0",
     "easytimer.js": "^4.5.4"
   }
 }
