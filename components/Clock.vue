@@ -29,9 +29,13 @@ props.clock.addEventListener('paused', () => isRunning.value = false)
 </script>
 
 <template>
-    <div class="text-lg">
+    <div class="flex-none w-1/2 text-center text-[14vw]"
+        :class="{
+            'bg-[#e8f5e9]': isRunning,
+        }"
+    >
         <template v-if="clockDisplay.minutes">
-            {{ clockDisplay.minutes }}<span :class="{ blinking: isRunning }">:</span>{{ clockDisplay.seconds }}
+            {{ clockDisplay.minutes }}<span :class="{ blinking: isRunning }">:</span>{{ clockDisplay.seconds }}.{{ clockDisplay.tenths }}
         </template>
         <template v-else>
             {{ clockDisplay.seconds }}<span class="text-red-600">.{{ clockDisplay.tenths }}</span>

@@ -20,10 +20,10 @@ window.addEventListener('keydown', (e) => {
     }
 
     if (binding === 'clockLeft') {
-        clocks.value.right.start()
+        clocks.value.right.start({precision: 'secondTenths'})
         clocks.value.left.pause()
     } else if (binding === 'clockRight') {
-        clocks.value.left.start()
+        clocks.value.left.start({precision: 'secondTenths'})
         clocks.value.right.pause()
     }
 })
@@ -60,7 +60,7 @@ watch(sliderSecondsIndex, (newValue) => {
     <div v-if="inSetupMode" class="text-center text-[14vw]">
         {{ initialMinutes }}+{{ incrementSeconds }}
     </div>
-    <div v-else>
+    <div v-else class="flex">
         <Clock :clock="clocks.left" />
         <Clock :clock="clocks.right" />
     </div>
