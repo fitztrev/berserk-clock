@@ -10,6 +10,11 @@ const bindings: Record<string, ButtonAction> = {
     Slash: 'zerkRight',
 }
 
+const playSound = (name: 'Berserk') => {
+    const audio = new Audio(`/sound/${name}.mp3`)
+    audio.play()
+}
+
 window.addEventListener('keydown', (e) => {
     const binding = bindings[e.code]
     if (!binding) return
@@ -22,20 +27,29 @@ window.addEventListener('keydown', (e) => {
     }
 
     if (binding === 'zerkLeft') {
-        clocks.left = new easytimer({
+        clocks.value.left = new easytimer({
             countdown: true,
             precision: 'secondTenths',
             startValues: {
-                seconds: clocks.left.getTimeValues().seconds / 2,
+                seconds: initialMinutes.value / 2 * 60,
             },
         })
+        playSound('Berserk')
     } else if (binding === 'zerkRight') {
+        clocks.value.right = new easytimer({
+            countdown: true,
+            precision: 'secondTenths',
+            startValues: {
+                seconds: initialMinutes.value / 2 * 60,
+            },
+        })
+        playSound('Berserk')
     } else if (binding === 'clockLeft') {
-        clocks.right.start()
-        clocks.left.pause()
+        clocks.value.right.start()
+        clocks.value.left.pause()
     } else if (binding === 'clockRight') {
-        clocks.left.start()
-        clocks.right.pause()
+        clocks.value.left.start()
+        clocks.value.right.pause()
     }
 })
 
@@ -53,7 +67,7 @@ const sliderSecondsIndex = useState('sliderSecondsIndex', () =>
     timeOptions.indexOf(incrementSeconds.value)
 )
 
-const clocks = {
+const clocks = ref({
     left: new easytimer({
         countdown: true,
         precision: 'secondTenths',
@@ -64,7 +78,9 @@ const clocks = {
         precision: 'secondTenths',
         startValues: { seconds: initialMinutes.value * 60 },
     }),
-}
+})
+
+console.log(JSON.stringify(clocks.value.left.getConfig()))
 
 watch(sliderMinuteIndex, (newValue) => {
     initialMinutes.value = timeOptions[newValue]
@@ -80,7 +96,7 @@ watch(sliderSecondsIndex, (newValue) => {
         {{ initialMinutes }}+{{ incrementSeconds }}
     </div>
     <div v-else class="flex">
-        <Clock :clock="clocks.left" />
-        <Clock :clock="clocks.right" />
+        <Clock :key="JSON.stringify(clocks.left.getConfig())" :clock="clocks.left" />
+        <Clock :key="JSON.stringify(clocks.right.getConfig())" :clock="clocks.right" />
     </div>
 </template>
