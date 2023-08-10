@@ -14,17 +14,28 @@ window.addEventListener('keydown', (e) => {
     const binding = bindings[e.code]
     if (!binding) return
 
+    console.log(binding)
+
     if (inSetupMode.value && (binding === 'clockLeft' || binding === 'clockRight')) {
         inSetupMode.value = false
         return
     }
 
-    if (binding === 'clockLeft') {
-        clocks.value.right.start({precision: 'secondTenths'})
-        clocks.value.left.pause()
+    if (binding === 'zerkLeft') {
+        clocks.left = new easytimer({
+            countdown: true,
+            precision: 'secondTenths',
+            startValues: {
+                seconds: clocks.left.getTimeValues().seconds / 2,
+            },
+        })
+    } else if (binding === 'zerkRight') {
+    } else if (binding === 'clockLeft') {
+        clocks.right.start()
+        clocks.left.pause()
     } else if (binding === 'clockRight') {
-        clocks.value.left.start({precision: 'secondTenths'})
-        clocks.value.right.pause()
+        clocks.left.start()
+        clocks.right.pause()
     }
 })
 
@@ -42,10 +53,18 @@ const sliderSecondsIndex = useState('sliderSecondsIndex', () =>
     timeOptions.indexOf(incrementSeconds.value)
 )
 
-const clocks = ref({
-    left: new easytimer({ countdown: true, startValues: { seconds: initialMinutes.value * 60 } }),
-    right: new easytimer({ countdown: true, startValues: { seconds: initialMinutes.value * 60 } }),
-})
+const clocks = {
+    left: new easytimer({
+        countdown: true,
+        precision: 'secondTenths',
+        startValues: { seconds: initialMinutes.value * 60 },
+    }),
+    right: new easytimer({
+        countdown: true,
+        precision: 'secondTenths',
+        startValues: { seconds: initialMinutes.value * 60 },
+    }),
+}
 
 watch(sliderMinuteIndex, (newValue) => {
     initialMinutes.value = timeOptions[newValue]
