@@ -2,6 +2,20 @@
 import easytimer from 'easytimer.js'
 
 type ButtonAction = 'clockLeft' | 'clockRight' | 'zerkLeft' | 'zerkRight'
+type InitialValue = number
+
+const inSetupMode = ref(true)
+
+const initialMinutes: Ref<InitialValue> = useState('initialMinutes', () => 10)
+const incrementSeconds: Ref<InitialValue> = useState(
+    'incrementSeconds',
+    () => 0
+)
+
+const clocks = ref({
+    left: new easytimer(),
+    right: new easytimer(),
+})
 
 const bindings: Record<string, ButtonAction> = {
     ShiftLeft: 'clockLeft',
@@ -21,8 +35,23 @@ window.addEventListener('keydown', (e) => {
 
     console.log(binding)
 
-    if (inSetupMode.value && (binding === 'clockLeft' || binding === 'clockRight')) {
+    if (
+        inSetupMode.value &&
+        (binding === 'clockLeft' || binding === 'clockRight')
+    ) {
         inSetupMode.value = false
+
+        clocks.value.left = new easytimer({
+            countdown: true,
+            precision: 'secondTenths',
+            startValues: { seconds: initialMinutes.value * 60 },
+        })
+
+        clocks.value.right = new easytimer({
+            countdown: true,
+            precision: 'secondTenths',
+            startValues: { seconds: initialMinutes.value * 60 },
+        })
         return
     }
 
@@ -31,7 +60,7 @@ window.addEventListener('keydown', (e) => {
             countdown: true,
             precision: 'secondTenths',
             startValues: {
-                seconds: initialMinutes.value / 2 * 60,
+                seconds: (initialMinutes.value / 2) * 60,
             },
         })
         playSound('Berserk')
@@ -40,7 +69,7 @@ window.addEventListener('keydown', (e) => {
             countdown: true,
             precision: 'secondTenths',
             startValues: {
-                seconds: initialMinutes.value / 2 * 60,
+                seconds: (initialMinutes.value / 2) * 60,
             },
         })
         playSound('Berserk')
@@ -53,50 +82,60 @@ window.addEventListener('keydown', (e) => {
     }
 })
 
-const inSetupMode = ref(true)
-const initialMinutes = useState('initialMinutes', () => 10)
-const incrementSeconds = useState('incrementSeconds', () => 0)
-
-const timeOptions = [0, 1, 2, 3, 5, 8, 10, 15, 20, 30, 45, 60, 90, 120]
-
-const sliderMinuteIndex = useState('sliderMinuteIndex', () =>
-    timeOptions.indexOf(initialMinutes.value)
-)
-
-const sliderSecondsIndex = useState('sliderSecondsIndex', () =>
-    timeOptions.indexOf(incrementSeconds.value)
-)
-
-const clocks = ref({
-    left: new easytimer({
-        countdown: true,
-        precision: 'secondTenths',
-        startValues: { seconds: initialMinutes.value * 60 },
-    }),
-    right: new easytimer({
-        countdown: true,
-        precision: 'secondTenths',
-        startValues: { seconds: initialMinutes.value * 60 },
-    }),
-})
-
-console.log(JSON.stringify(clocks.value.left.getConfig()))
-
-watch(sliderMinuteIndex, (newValue) => {
-    initialMinutes.value = timeOptions[newValue]
-})
-
-watch(sliderSecondsIndex, (newValue) => {
-    incrementSeconds.value = timeOptions[newValue]
-})
+const changeInitialTimeValue = (
+    store: 'initialMinutes' | 'incrementSeconds',
+    delta: number
+) => {
+    const value = useState(store) as Ref<InitialValue>
+    console.log(value.value)
+    const timeOptions = [0, 1, 2, 3, 5, 8, 10, 15, 20, 30, 45, 60, 90, 120]
+    const index = timeOptions.indexOf(value.value)
+    const newIndex = Math.max(
+        0,
+        Math.min(timeOptions.length - 1, index + delta)
+    )
+    value.value = timeOptions[newIndex]
+}
 </script>
 
 <template>
-    <div v-if="inSetupMode" class="text-center text-[14vw]">
-        {{ initialMinutes }}+{{ incrementSeconds }}
+    <div v-if="inSetupMode" class="flex text-center text-[10vw]">
+        <div class="flex-none w-1/3">
+            <div>
+                <button @click="changeInitialTimeValue('initialMinutes', +1)">
+                    &#9650;
+                </button>
+            </div>
+            {{ initialMinutes }}
+            <div>
+                <button @click="changeInitialTimeValue('initialMinutes', -1)">
+                    &#9660;
+                </button>
+            </div>
+        </div>
+        <div class="flex-none w-1/3">+</div>
+        <div class="flex-none w-1/3">
+            <div>
+                <button @click="changeInitialTimeValue('incrementSeconds', +1)">
+                    &#9650;
+                </button>
+            </div>
+            {{ incrementSeconds }}
+            <div>
+                <button @click="changeInitialTimeValue('incrementSeconds', -1)">
+                    &#9660;
+                </button>
+            </div>
+        </div>
     </div>
     <div v-else class="flex">
-        <Clock :key="JSON.stringify(clocks.left.getConfig())" :clock="clocks.left" />
-        <Clock :key="JSON.stringify(clocks.right.getConfig())" :clock="clocks.right" />
+        <Clock
+            :key="JSON.stringify(clocks.left.getConfig())"
+            :clock="clocks.left"
+        />
+        <Clock
+            :key="JSON.stringify(clocks.right.getConfig())"
+            :clock="clocks.right"
+        />
     </div>
 </template>
