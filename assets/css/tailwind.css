@@ -1,4 +1,4 @@
-@import url(https://fonts.bunny.net/css?family=chivo-mono:400);
+@import url(https://fonts.bunny.net/css?family=b612-mono:400);
 @import "blinking.css/css/blinking.css";
 
 @tailwind base;
@@ -6,5 +6,5 @@
 @tailwind utilities;
 
 * {
-    font-family: 'Chivo Mono', monospace;
+    font-family: 'B612 Mono', monospace;
 }

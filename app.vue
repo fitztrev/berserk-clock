@@ -99,33 +99,44 @@ const changeInitialTimeValue = (
 </script>
 
 <template>
-    <div v-if="inSetupMode" class="flex text-center text-[10vw]">
-        <div class="flex-none w-1/3">
-            <div>
-                <button @click="changeInitialTimeValue('initialMinutes', +1)">
-                    &#9650;
-                </button>
-            </div>
+    <div
+        v-if="inSetupMode"
+        class="flex text-center text-[12vw] h-screen items-center"
+    >
+        <div class="flex-none w-2/5">
+            <button
+                @click="changeInitialTimeValue('initialMinutes', +1)"
+                class="text-gray-300"
+            >
+                &#9650;
+            </button>
+            <br />
             {{ initialMinutes }}
-            <div>
-                <button @click="changeInitialTimeValue('initialMinutes', -1)">
-                    &#9660;
-                </button>
-            </div>
+            <br />
+            <button
+                @click="changeInitialTimeValue('initialMinutes', -1)"
+                class="text-gray-300"
+            >
+                &#9660;
+            </button>
         </div>
-        <div class="flex-none w-1/3">+</div>
-        <div class="flex-none w-1/3">
-            <div>
-                <button @click="changeInitialTimeValue('incrementSeconds', +1)">
-                    &#9650;
-                </button>
-            </div>
+        <div class="flex-none w-1/5">+</div>
+        <div class="flex-none w-2/5">
+            <button
+                @click="changeInitialTimeValue('incrementSeconds', +1)"
+                class="text-gray-300"
+            >
+                &#9650;
+            </button>
+            <br />
             {{ incrementSeconds }}
-            <div>
-                <button @click="changeInitialTimeValue('incrementSeconds', -1)">
-                    &#9660;
-                </button>
-            </div>
+            <br />
+            <button
+                @click="changeInitialTimeValue('incrementSeconds', -1)"
+                class="text-gray-300"
+            >
+                &#9660;
+            </button>
         </div>
     </div>
     <div v-else class="flex">

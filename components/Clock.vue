@@ -33,11 +33,11 @@ props.clock.addEventListener('paused', () => isRunning.value = false)
             'bg-[#e8f5e9]': isRunning,
         }"
     >
-        <template v-if="clockDisplay.minutes">
-            {{ clockDisplay.minutes }}<span :class="{ blinking: isRunning }">:</span>{{ clockDisplay.seconds }}
+        <template v-if="clockDisplay.minutes === '0'">
+            {{ clockDisplay.seconds }}<span class="text-[5vw]">.{{ clockDisplay.tenths }}</span>
         </template>
         <template v-else>
-            {{ clockDisplay.seconds }}<span class="text-red-600">.{{ clockDisplay.tenths }}</span>
+            {{ clockDisplay.minutes }}<span :class="{ blinking: isRunning }">:</span>{{ clockDisplay.seconds }}
         </template>
     </div>
 </template>
