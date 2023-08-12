@@ -9,6 +9,7 @@ Simulate the buttons on the clock by pressing keys 1-4 on your keyboard.
 
 ```bash
 npx nuxi typecheck
+npx prettier --write .
 npx vitest
 ```
 
