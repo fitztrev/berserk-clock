@@ -23,10 +23,10 @@ const isBerserked = ref({
 })
 
 const bindings: Record<string, ButtonAction> = {
-    ShiftLeft: 'clockLeft',
-    ShiftRight: 'clockRight',
-    KeyZ: 'zerkLeft',
-    Slash: 'zerkRight',
+    'Digit1': 'clockLeft',
+    'Digit2': 'clockRight',
+    'Digit3': 'zerkLeft',
+    'Digit4': 'zerkRight',
 }
 
 const playSound = (name: 'Berserk') => {
