@@ -17,6 +17,11 @@ const clocks = ref({
     right: new easytimer(),
 })
 
+const isBerserked = ref({
+    left: false,
+    right: false,
+})
+
 const bindings: Record<string, ButtonAction> = {
     ShiftLeft: 'clockLeft',
     ShiftRight: 'clockRight',
@@ -63,6 +68,7 @@ window.addEventListener('keydown', (e) => {
                 seconds: (initialMinutes.value / 2) * 60,
             },
         })
+        isBerserked.value.left = true
         playSound('Berserk')
     } else if (binding === 'zerkRight') {
         clocks.value.right = new easytimer({
@@ -72,6 +78,7 @@ window.addEventListener('keydown', (e) => {
                 seconds: (initialMinutes.value / 2) * 60,
             },
         })
+        isBerserked.value.right = true
         playSound('Berserk')
     } else if (binding === 'clockLeft') {
         clocks.value.right.start()
@@ -101,12 +108,12 @@ const changeInitialTimeValue = (
 <template>
     <div
         v-if="inSetupMode"
-        class="flex text-center text-[12vw] h-screen items-center"
+        class="flex text-center text-[12vw] h-screen items-center text-slate-600"
     >
         <div class="flex-none w-2/5">
             <button
                 @click="changeInitialTimeValue('initialMinutes', +1)"
-                class="text-gray-300"
+                class="text-slate-200"
             >
                 &#9650;
             </button>
@@ -115,7 +122,7 @@ const changeInitialTimeValue = (
             <br />
             <button
                 @click="changeInitialTimeValue('initialMinutes', -1)"
-                class="text-gray-300"
+                class="text-slate-200"
             >
                 &#9660;
             </button>
@@ -124,7 +131,7 @@ const changeInitialTimeValue = (
         <div class="flex-none w-2/5">
             <button
                 @click="changeInitialTimeValue('incrementSeconds', +1)"
-                class="text-gray-300"
+                class="text-slate-200"
             >
                 &#9650;
             </button>
@@ -133,20 +140,22 @@ const changeInitialTimeValue = (
             <br />
             <button
                 @click="changeInitialTimeValue('incrementSeconds', -1)"
-                class="text-gray-300"
+                class="text-slate-200"
             >
                 &#9660;
             </button>
         </div>
     </div>
-    <div v-else class="flex">
+    <div v-else class="flex gap-[1vw]">
         <Clock
             :key="JSON.stringify(clocks.left.getConfig())"
             :clock="clocks.left"
+            :isBerserked="isBerserked.left"
         />
         <Clock
             :key="JSON.stringify(clocks.right.getConfig())"
             :clock="clocks.right"
+            :isBerserked="isBerserked.right"
         />
     </div>
 </template>

@@ -3,6 +3,7 @@ import Timer from 'easytimer.js';
 
 const props = defineProps<{
     clock: Timer
+    isBerserked: boolean
 }>()
 
 const isRunning = ref(false)
@@ -28,16 +29,17 @@ props.clock.addEventListener('paused', () => isRunning.value = false)
 </script>
 
 <template>
-    <div class="flex-none w-1/2 text-center text-[10vw]"
+    <div class="flex-none w-1/2 text-center text-[14vw] h-screen flex items-center justify-center text-slate-600"
         :class="{
-            'bg-[#e8f5e9]': isRunning,
+            'bg-[#e8f5e9] text-[#2e7d32] border-b-[3vh] border-b-[#2e7d32]': isRunning,
+            'border-t-[3vh] border-t-red-700': isBerserked,
         }"
     >
-        <template v-if="clockDisplay.minutes === '0'">
+        <div v-if="clockDisplay.minutes === '0'">
             {{ clockDisplay.seconds }}<span class="text-[5vw]">.{{ clockDisplay.tenths }}</span>
-        </template>
-        <template v-else>
+        </div>
+        <div v-else>
             {{ clockDisplay.minutes }}<span :class="{ blinking: isRunning }">:</span>{{ clockDisplay.seconds }}
-        </template>
+        </div>
     </div>
 </template>
