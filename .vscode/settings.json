@@ -1,0 +1,9 @@
+{
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**",
+        "~/.arduino15/libraries/**",
+        "~/.arduino15/packages/arduino/hardware/**",
+        "~/.arduino15/packages/arduino/tools/**",
+        "~/Arduino/libraries/**"
+    ]
+}
