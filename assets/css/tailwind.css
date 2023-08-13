@@ -9,6 +9,11 @@
   src: url('/fonts/ChivoMono-Regular.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Lichess';
+  src: url('/fonts/lichess.woff2') format('woff2');
+}
+
 @layer base {
   html {
     font-family: 'Chivo Mono', monospace;
