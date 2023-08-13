@@ -108,21 +108,21 @@ const toggleFullScreen = () => {
 </script>
 
 <template>
-  <button @click="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400 bg-white opacity-80">
+  <button @mousedown="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400 bg-white opacity-80">
     <img v-if="isFullScreen" src="/images/fullscreen-exit.svg" class="h-8" />
     <img v-else src="/images/fullscreen-enter.svg" class="h-8" />
   </button>
   <div v-if="inSetupMode" class="flex text-center text-[18vw] h-screen items-center text-slate-600 leading-none">
     <div class="flex-none w-2/5">
-      <ChangeClockValue @click="changeInitialTimeValue('initialMinutes', +1)" :step="+1" />
+      <ChangeClockValue @mousedown="changeInitialTimeValue('initialMinutes', +1)" :step="+1" />
       {{ initialMinutes }}
-      <ChangeClockValue @click="changeInitialTimeValue('initialMinutes', -1)" :step="-1" />
+      <ChangeClockValue @mousedown="changeInitialTimeValue('initialMinutes', -1)" :step="-1" />
     </div>
     <div class="flex-none w-1/5">+</div>
     <div class="flex-none w-2/5">
-      <ChangeClockValue @click="changeInitialTimeValue('incrementSeconds', +1)" :step="+1" />
+      <ChangeClockValue @mousedown="changeInitialTimeValue('incrementSeconds', +1)" :step="+1" />
       {{ incrementSeconds }}
-      <ChangeClockValue @click="changeInitialTimeValue('incrementSeconds', -1)" :step="-1" />
+      <ChangeClockValue @mousedown="changeInitialTimeValue('incrementSeconds', -1)" :step="-1" />
     </div>
   </div>
   <div v-else class="flex gap-[1vw]">
