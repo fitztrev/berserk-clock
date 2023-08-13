@@ -6,6 +6,7 @@ type InitialValue = number
 
 const inSetupMode = ref(true)
 const clocksAreRunning = ref(false)
+const isFullScreen = ref(false)
 
 const initialMinutes: Ref<InitialValue> = useState('initialMinutes', () => 10)
 const incrementSeconds: Ref<InitialValue> = useState('incrementSeconds', () => 0)
@@ -95,21 +96,22 @@ const changeInitialTimeValue = (store: 'initialMinutes' | 'incrementSeconds', de
   value.value = timeOptions[newIndex]
 }
 
-let isFullScreen = false
-
 const toggleFullScreen = () => {
-    if (isFullScreen) {
-        document.exitFullscreen()
-        isFullScreen = false
-    } else {
-        document.documentElement.requestFullscreen()
-        isFullScreen = true
-    }
+  if (isFullScreen.value) {
+    document.exitFullscreen()
+    isFullScreen.value = false
+  } else {
+    document.documentElement.requestFullscreen()
+    isFullScreen.value = true
+  }
 }
 </script>
 
 <template>
-  <button @click="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400">&#x26F6;</button>
+  <button @click="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400">
+    <img v-if="isFullScreen" src="images/fullscreen-exit.svg" class="h-8" />
+    <img v-else src="images/fullscreen-enter.svg" class="h-8" />
+  </button>
   <div v-if="inSetupMode" class="flex text-center text-[12vw] h-screen items-center text-slate-600">
     <div class="flex-none w-2/5">
       <button @click="changeInitialTimeValue('initialMinutes', +1)" class="text-slate-200">&#9650;</button>
@@ -128,7 +130,11 @@ const toggleFullScreen = () => {
     </div>
   </div>
   <div v-else class="flex gap-[1vw]">
-    <img v-if="clocksAreRunning" src="/images/pause-icon.svg" class="h-[20vh] absolute left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-[100%]" />
+    <img
+      v-if="clocksAreRunning"
+      src="/images/pause-icon.svg"
+      class="h-[20vh] absolute left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-[100%]"
+    />
     <Clock :key="JSON.stringify(clocks.left.getConfig())" :clock="clocks.left" :isBerserked="isBerserked.left" />
     <Clock :key="JSON.stringify(clocks.right.getConfig())" :clock="clocks.right" :isBerserked="isBerserked.right" />
   </div>
