@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "font": "git clone https://github.com/Omnibus-Type/Chivo && mv 'Chivo/fonts/Chivo Mono/webfonts/ChivoMono-Regular.woff2' public/fonts && rm -rf Chivo"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

@@ -5,6 +5,7 @@ type ButtonAction = 'clockLeft' | 'clockRight' | 'zerkLeft' | 'zerkRight'
 type InitialValue = number
 
 const inSetupMode = ref(true)
+const clocksAreRunning = ref(false)
 
 const initialMinutes: Ref<InitialValue> = useState('initialMinutes', () => 10)
 const incrementSeconds: Ref<InitialValue> = useState('incrementSeconds', () => 0)
@@ -75,9 +76,11 @@ window.addEventListener('keydown', (e) => {
     isBerserked.value.right = true
     playSound('Berserk')
   } else if (binding === 'clockLeft') {
+    clocksAreRunning.value = true
     clocks.value.right.start()
     clocks.value.left.pause()
   } else if (binding === 'clockRight') {
+    clocksAreRunning.value = true
     clocks.value.left.start()
     clocks.value.right.pause()
   }
@@ -112,6 +115,7 @@ const changeInitialTimeValue = (store: 'initialMinutes' | 'incrementSeconds', de
     </div>
   </div>
   <div v-else class="flex gap-[1vw]">
+    <img v-if="clocksAreRunning" src="/images/pause-icon.svg" class="h-[20vh] absolute left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-[100%]" />
     <Clock :key="JSON.stringify(clocks.left.getConfig())" :clock="clocks.left" :isBerserked="isBerserked.left" />
     <Clock :key="JSON.stringify(clocks.right.getConfig())" :clock="clocks.right" :isBerserked="isBerserked.right" />
   </div>

@@ -1,5 +1,6 @@
 ```bash
 npm install
+npm run font
 npm run dev
 ```
 
@@ -20,3 +21,8 @@ npm run build
 ```bash
 npm run preview
 ```
+
+
+### Credits
+
+- Font: [Chivo Mono](https://github.com/Omnibus-Type/Chivo)
