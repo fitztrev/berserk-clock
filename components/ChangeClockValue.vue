@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
   <div class="font-[Lichess]">
-    <button class="text-slate-400">
+    <button class="text-slate-300">
       <template v-if="props.step > 0"> &#57414;</template>
       <template v-else> &#57413; </template>
     </button>
