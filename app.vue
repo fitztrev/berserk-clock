@@ -94,9 +94,22 @@ const changeInitialTimeValue = (store: 'initialMinutes' | 'incrementSeconds', de
   const newIndex = Math.max(0, Math.min(timeOptions.length - 1, index + delta))
   value.value = timeOptions[newIndex]
 }
+
+let isFullScreen = false
+
+const toggleFullScreen = () => {
+    if (isFullScreen) {
+        document.exitFullscreen()
+        isFullScreen = false
+    } else {
+        document.documentElement.requestFullscreen()
+        isFullScreen = true
+    }
+}
 </script>
 
 <template>
+  <button @click="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400">&#x26F6;</button>
   <div v-if="inSetupMode" class="flex text-center text-[12vw] h-screen items-center text-slate-600">
     <div class="flex-none w-2/5">
       <button @click="changeInitialTimeValue('initialMinutes', +1)" class="text-slate-200">&#9650;</button>
