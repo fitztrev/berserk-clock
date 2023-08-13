@@ -22,7 +22,6 @@ npm run build
 npm run preview
 ```
 
-
 ### Credits
 
 - Font: [Chivo Mono](https://github.com/Omnibus-Type/Chivo)
