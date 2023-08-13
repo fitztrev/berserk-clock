@@ -112,7 +112,7 @@ const toggleFullScreen = () => {
     <img v-if="isFullScreen" src="/images/fullscreen-exit.svg" class="h-8" />
     <img v-else src="/images/fullscreen-enter.svg" class="h-8" />
   </button>
-  <div v-if="inSetupMode" class="flex text-center text-[18vw] h-screen items-center text-slate-600 leading-none">
+  <div v-if="inSetupMode" class="flex text-center text-[20vw] h-screen items-center text-slate-600 leading-none">
     <div class="flex-none w-2/5">
       <ChangeClockValue @mousedown="changeInitialTimeValue('initialMinutes', +1)" :step="+1" />
       {{ initialMinutes }}
