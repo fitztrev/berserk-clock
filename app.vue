@@ -109,8 +109,8 @@ const toggleFullScreen = () => {
 
 <template>
   <button @click="toggleFullScreen" class="absolute right-2 text-3xl text-slate-400">
-    <img v-if="isFullScreen" src="images/fullscreen-exit.svg" class="h-8" />
-    <img v-else src="images/fullscreen-enter.svg" class="h-8" />
+    <img v-if="isFullScreen" src="/images/fullscreen-exit.svg" class="h-8" />
+    <img v-else src="/images/fullscreen-enter.svg" class="h-8" />
   </button>
   <div v-if="inSetupMode" class="flex text-center text-[12vw] h-screen items-center text-slate-600">
     <div class="flex-none w-2/5">
