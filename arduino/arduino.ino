@@ -4,10 +4,10 @@
 #include <Button2.h>
 
 // Define the button pins
-const int ClockLeftPin = 2;
-const int ClockRightPin = 3;
-const int BerserkLeftPin = 4;
-const int BerserkRightPin = 5;
+const int ClockLeftPin = 6;
+const int ClockRightPin = 10;
+const int BerserkLeftPin = 8;
+const int BerserkRightPin = 4;
 
 // Create Button2 objects for each button
 Button2 clockLeftButton(ClockLeftPin);
